@@ -32,4 +32,14 @@ res,err := ns.db.NameExecContext (ctx,"INSERT INTO PRODUCTS (name,image,category
 }
 
 
+func (ms *MySQLStorer) GetProduct (ctx context.Context,id int64) (*Product,error){
+	var p Product 
+	err := ms.db.GetContext(ctx,&p,"SELECT * FROM products where id=?",id)
+	if err !=nil {
+		return nil, fmt.Errorf("Error getting product: %w",err)
+	}
+
+	return &p,nil 
+}
+
 
